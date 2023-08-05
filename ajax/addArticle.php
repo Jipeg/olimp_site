@@ -3,6 +3,8 @@
     $intro = trim(filter_var($_POST['intro'], FILTER_SANITIZE_STRING));
     $text = trim($_POST['text']);
 
+    $text = nl2br($text);
+
     $error = '';
     if(strlen($title) <= 3){
         $error = 'Введите название';

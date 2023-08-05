@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <?php
-$website_title = 'Авторизация на сайте';
+if($_COOKIE['log'] == '') $website_title = 'Авторизация на сайте';
+else $website_title = "Кабинет пользователя [{$_COOKIE['log']}]";
 require 'blocks/head.php';
 ?>
 </head>
@@ -29,6 +30,27 @@ require 'blocks/head.php';
         else:
         ?>
         <h2><?=$_COOKIE['log']?></h2>
+        <div class="alert alert-danger mt-2" id="errorBlock"></div>
+        <div class="card">
+          <h2 class="card-header">Ваши статьи:</h2>
+          <div class="card-body">
+          <?php
+              require_once 'db/db1.php';
+              $sql = "SELECT * from articles WHERE `author` = ? ORDER BY `date` DESC";
+              $query = $pdo->prepare($sql);
+              $query->execute([$_COOKIE['log']]);
+              while($row = $query->fetch(PDO::FETCH_OBJ)) {
+                
+                echo "<div class='card mb-4'>
+                  <h3 class='card-title m-2'>$row->title</h3>
+                  <p class='card-body'>$row->intro
+                    <button alt='$row->id' class='deleteArticle float-end card-body btn btn-danger p-1'>Удалить статью</button>
+                  </p>
+                </div>";
+              }
+          ?>
+          </div>
+        </div>
         <button class="btn btn-danger" id="exit_btn">Выйти</button>
         <?php 
         endif;
@@ -42,6 +64,8 @@ require 'blocks/head.php';
 <?php require 'blocks/footer.php'; ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+<!-- скрипт для входа -->
 <script>
 $('#loginButton').click(function() {
   var login = $('#login').val();
@@ -68,6 +92,7 @@ $('#loginButton').click(function() {
   })
 })
 
+// скрипт для выхода
 $('#exit_btn').click(function() {
   $.ajax({
     url: 'ajax/exit.php',
@@ -82,5 +107,32 @@ $('#exit_btn').click(function() {
 })
 
 </script>
+
+
+<!-- скрипт для удаления статьи -->
+<script>
+  $('.deleteArticle').click(function(e) {
+    var artId = e.target.attributes.alt.value;
+    console.log(e.target.attributes.alt.value);
+    $.ajax({
+      url: 'ajax/removeArticle.php',
+      type: 'POST',
+      cache: false,
+      data: {'id': artId},
+      dataType: 'html',
+      success: function(data) {
+        if (data == 'Готово') {
+          $('#errorBlock').hide();
+          document.location.reload(true);
+        }
+        else {
+          $('#errorBlock').show();
+          $('#errorBlock').text(data);
+        }
+      }
+    })
+});
+</script>
+        
 </body>
 </html>

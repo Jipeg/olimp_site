@@ -20,7 +20,7 @@ require 'blocks/head.php';
 <main class="container mt-5">
   <div class="row">
       <div class="col-md-8 mb-5">
-          <div class="jumbotron">
+          <div class="jumbotron mb-5">
             <h1><?=$article->title?></h1>
             <p>Дата: <u><?=date("D, j F Y, G:i:s", $article->date)?></u></p>
             <p>Автор: <mark><?=$article->author?></mark></p>
