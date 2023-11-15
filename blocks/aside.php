@@ -5,7 +5,7 @@
     </div>
 
     <div class="p-3 mb-3 ">
-        <img class="img-thumbnail" src="img/fact.jpg" alt="факт дня">
+        <img class="img-thumbnail" src="/img/fact.jpg" alt="факт дня">
     </div>
     
 </aside>

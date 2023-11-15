@@ -1,6 +1,6 @@
 <?php
 if ($_COOKIE['log']=='') {
-    header('Location: /olimp_site/reg.php');
+    header('Location: /reg.php');
     exit();
 }
 ?>

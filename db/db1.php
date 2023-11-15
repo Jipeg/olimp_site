@@ -1,6 +1,6 @@
 <?php 
-$user = 'f0767272';
-$password = 'imuwukbema';
+$user = 'root';
+$password = '';
 $db = 'olimp_db';
 $host = 'localhost';
 

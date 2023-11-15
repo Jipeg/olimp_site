@@ -72,7 +72,7 @@ $('#loginButton').click(function() {
   var pass = $('#pass').val();
 
   $.ajax({
-    url: 'ajax/auth.php',
+    url: '/ajax/auth.php',
     type: 'POST',
     cache: false,
     data: {'login': login, 'pass': pass},

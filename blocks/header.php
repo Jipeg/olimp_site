@@ -1,6 +1,6 @@
 <div class="container">
   <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-      <a href="/olimp_site/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+      <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
           <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
           <span class="fs-4">Типа шапка</span>
       </a>
@@ -10,8 +10,8 @@
       </a>
 
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-      <li><a href="/olimp_site/" class="nav-link px-2 link-secondary">Главная</a></li>
-      <li><a href="/olimp_site/contacts.php" class="nav-link px-2 link-secondary">Контакты</a></li>
+      <li><a href="/" class="nav-link px-2 link-secondary">Главная</a></li>
+      <li><a href="/contacts.php" class="nav-link px-2 link-secondary">Контакты</a></li>
       <li><a href="#" class="nav-link px-2 link-dark">О нас</a></li>
       </ul>
       <?php 
