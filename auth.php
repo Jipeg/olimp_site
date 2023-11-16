@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <?php
-if($_COOKIE['log'] == '') $website_title = 'Авторизация на сайте';
+if(!array_key_exists('log', $_COOKIE) or ($_COOKIE['log'] == '')) $website_title = 'Авторизация на сайте';
 else $website_title = "Кабинет пользователя [{$_COOKIE['log']}]";
 require 'blocks/head.php';
 ?>
@@ -13,7 +13,7 @@ require 'blocks/head.php';
   <div class="row">
       <div class="col-md-8 mb-5">
         <?php 
-        if($_COOKIE['log'] == ''):
+        if(!array_key_exists('log', $_COOKIE) or($_COOKIE['log'] == '')):
         ?>
           <h4>Авторизация</h4>
           <form>

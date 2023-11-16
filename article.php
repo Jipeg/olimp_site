@@ -30,11 +30,11 @@ require 'blocks/head.php';
             <textarea rows="8" name="text" id="text" class="form-control"></textarea>
 
             <div class="btn-group d-flex justify-content-end " role="group" aria-label="tools">
-              <button type="button" id="mkBold" class="btn btn-outline-secondary"><img src="img/type-bold.svg" alt="Bold"></button>
-              <button type="button" id="mkItalic" class="btn btn-outline-secondary"><img src="img/type-italic.svg" alt="Italic"></button>
-              <button type="button" id="mkCenter" class="btn btn-outline-secondary"><img src="img/text-center.svg" alt="Center"></button>
-              <button type="button" id="mkLink" class="btn btn-outline-secondary"><img src="img/link.svg" alt="Link"></button>
-              <button type="button" id="mkClean" class="btn btn-outline-secondary"><img src="img/trash.svg" alt="Trash"></button>
+              <button type="button" id="mkBold" class="btn btn-outline-secondary" title="Полужирный"><img src="img/type-bold.svg" alt="Bold"></button>
+              <button type="button" id="mkItalic" class="btn btn-outline-secondary" title="Курсив"><img src="img/type-italic.svg" alt="Italic"></button>
+              <button type="button" id="mkCenter" class="btn btn-outline-secondary" title="Центрировать"><img src="img/text-center.svg" alt="Center"></button>
+              <button type="button" id="mkLink" class="btn btn-outline-secondary" title="Добавить ссылку"><img src="img/link.svg" alt="Link"></button>
+              <button type="button" id="mkClean" class="btn btn-outline-secondary" title="Очистить"><img src="img/trash.svg" alt="Trash" ></button>
             </div>
 
             <div class="alert alert-danger mt-2" id="errorBlock"></div>

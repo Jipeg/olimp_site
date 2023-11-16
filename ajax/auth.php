@@ -23,7 +23,7 @@
     $query->execute(['login' => $login,'pass' => $pass]);
 
     $user = $query->fetch(PDO::FETCH_OBJ);
-    if ($user->id == 0){
+    if (empty($user)){
         echo 'Пользователя с такими логином и паролем нет в базе';
     }
     else {

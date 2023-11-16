@@ -15,7 +15,7 @@
       <li><a href="#" class="nav-link px-2 link-dark">О нас</a></li>
       </ul>
       <?php 
-        if($_COOKIE['log'] == ''):
+        if(!array_key_exists('log', $_COOKIE) or ($_COOKIE['log'] == '')):
       ?>
       <div class="col-md-3 text-end">
       <a href="auth.php" class="btn btn-outline-primary me-2">Войти</a>
