@@ -17,7 +17,7 @@
         exit();
     }
 
-    $to = 'andronov-kolya@ya.ru';
+    $to = 'andronov.kolya@ya.ru';
     $subject = "=?utf-8?B?".base64_encode("Новое сообщение с сайта")."?=";
     $headers = "From: $email\r\nReply-to: $email\r\nContent-type: text/html; charset=utf-8\r\n";
 

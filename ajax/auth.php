@@ -27,7 +27,8 @@
         echo 'Пользователя с такими логином и паролем нет в базе';
     }
     else {
-        setcookie('log', $login, time() + 3600 * 24 * 30, "/");
+        setcookie('log', $user->id, time() + 3600 * 24 * 30, "/");
+        //setcookie('user_id', $user->id, time() + 3600 * 24 * 30, "/");
         echo 'готово';
     }
 ?>

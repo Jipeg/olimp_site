@@ -54,11 +54,15 @@ $('#registerButton').click(function() {
       if (data == 'Готово') {
         $('#errorBlock').hide();
         $('#registerButton').text('Вы зарегистрированы');
+        const btn = document.querySelector('#registerButton');
+        btn.disabled = true;
+        btn.classList.remove("btn-success");
+        btn.setAttribute('title', 'Вы зарегистрированы');
+        //btn.classList.add("btn-success");
       }
       else {
         $('#errorBlock').show();
         $('#errorBlock').text(data);
-
         $('#registerButton').text('Зарегистрироваться');
       }
     }
