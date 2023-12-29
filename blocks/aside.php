@@ -1,7 +1,14 @@
 <aside class="col-md-4">
     <div class="p-3 mb-3 bg-warning rounded">
         <h4><b>Интересные факты</b></h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem velit quaerat nesciunt debitis assumenda, soluta alias expedita ut similique dolore inventore repellendus nemo. Praesentium sunt quidem velit officiis molestiae blanditiis.</p>
+        <?php
+            require_once 'db/db1.php';
+            
+            $sql = 'SELECT `text` from facts where `id` = ' . random_int(2, 11);
+            $query = $pdo->query($sql);
+            $row = $query->fetch(PDO::FETCH_OBJ);
+            echo "<p>$row->text</p>\n";
+        ?>
     </div>
 
     <div class="p-3 mb-3 ">

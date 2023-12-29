@@ -1,5 +1,5 @@
 <?php
-if ($_COOKIE['log']=='') {
+if ($_COOKIE['log'] != '11') {
     header('Location: /reg.php');
     exit();
 }

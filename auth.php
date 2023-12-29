@@ -29,13 +29,33 @@ require 'blocks/head.php';
         <?php 
         else: // Кабинет пользователя
         ?>
+        <?php
+            require_once 'db/db1.php';
+            $sql = "SELECT * from users_data WHERE `user_id` = ? order by `id` DESC limit 1" ;
+            $query = $pdo->prepare($sql);
+            $query->execute([$_COOKIE['log']]);
+            $user_data = $query->fetch(PDO::FETCH_OBJ);    
+        ?>
         <div class="card">
           <h2 class="card-header">
-            Кабинет пользователя id=<?=$_COOKIE['log']?> <button class="btn btn-danger float-end" id="exit_btn">Выйти</button>
+            Кабинет пользователя <?= $user_data->name ?? '"Имя не введено"'?> <button class="btn btn-danger float-end" id="exit_btn">Выйти</button>
           </h2>
+          
+          <?php 
+            if($user_data->is_valid != null): // Дать ссылку
+          ?>
+          <div class="card-body">
+            Ваша ссылка: <a href="https://www.yandex.ru">Yandex</a>
+          </div>
+          <?php 
+            else:
+          ?>
           <div class="card-body">
             Здесь будет ссылка на контест, если корректно заполните все поля
           </div>
+          <?php 
+            endif;
+          ?>
         </div>
         <div class="card mt-3">
           <h2 class="card-header">Регистрация на олимпиаду</h2>
@@ -45,13 +65,6 @@ require 'blocks/head.php';
         </div>
         <div class="card mt-3">
           <h2 class="card-header">Ваши данные</h2>
-          <?php
-            require_once 'db/db1.php';
-            $sql = "SELECT * from users_data WHERE `user_id` = ?";
-            $query = $pdo->prepare($sql);
-            $query->execute([$_COOKIE['log']]);
-            $user_data = $query->fetch(PDO::FETCH_OBJ);    
-          ?>
           <div class="card-body">
             <form>
               <label for="name">Имя</label>
@@ -94,7 +107,7 @@ require 'blocks/head.php';
               <input type="text" name="teacher_email" id="teacher_email" class="form-control mb-4" value="<?= $user_data->teacher_email ?? '' ?>">
 
               <div class="alert alert-danger mt-2" id="errorBlock"></div>
-              <button type="button" id="saveDataButton" class="btn btn-success mt-3" disabled>
+              <button type="button" id="statusDataButton" class="btn btn-success mt-3" disabled>
                 <?= empty($user_data) ? 'Данные НЕ отправлены' : 'Данные отправлены' ?>
               </button>
               <button type="button" id="saveDataButton" class="btn btn-success mt-3">Сохранить</button>

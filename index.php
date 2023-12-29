@@ -16,12 +16,12 @@ require 'blocks/head.php';
             $sql = 'SELECT * from articles ORDER BY `date` DESC';
             $query = $pdo->query($sql);
             while($row = $query->fetch(PDO::FETCH_OBJ)) {
-              echo "<h2 >$row->title</h2>
+              echo "<div class='card'><h2 >$row->title</h2>
               <p>$row->intro</p>
               <p>Автор: <mark>$row->author</mark></p>
               <a href='articles.php?id=$row->id'>
                 <button class='btn btn-warning mb-5' href='qwe.php'>Читать целиком</button>
-              </a>";
+              </a></div>";
               
             }
           ?>
