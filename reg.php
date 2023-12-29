@@ -50,7 +50,11 @@ $('#registerButton').click(function() {
     url: 'ajax/reg.php',
     type: 'POST',
     cache: false,
-    data: {'email': email, 'pass': pass},
+    data: {
+      action: 'register',
+      email: email,
+      pass: pass
+    },
     dataType: 'html',
     success: function(data) {
       if (data == 'Готово') {
@@ -74,10 +78,13 @@ $('#registerButton').click(function() {
 $('#getCodeButton').click(function() {
   email = $('#email').val();
   $.ajax({
-    url: 'ajax/getCode.php',
+    url: 'ajax/reg.php',
     type: 'POST',
     cache: false,
-    data: {'email': email},
+    data: {
+      action: 'getCode',
+      email: email
+    },
     dataType: 'html',
     success: function(res1) {
       const res = JSON.parse(res1);
