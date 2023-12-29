@@ -19,16 +19,17 @@ require 'blocks/head.php';
 
             <button type="button" id="getCodeButton" class="btn btn-success mt-3">Получить код</button><br>
 
-            <label for="code">Введите код из письма</label>
-            <input type="text" name="code" id="code" class="form-control" disabled>
-
-            <button type="button" id="checkCodeButton" class="btn btn-success mt-3" disabled>Подтвердить email</button><br>
-
+            <?php
+              if (isset($_GET['token'])): 
+            ?>
+            <input type="hidden" name="token" id="token" value="<?=htmlentities($_GET['token'])?>">
             <label for="pass">Ваш пароль</label>
-            <input type="password" name="pass" id="pass" class="form-control" disabled>
-
+            <input type="password" name="pass" id="pass" class="form-control">
+            <button type="button" id="registerButton" class="btn btn-success mt-3">Зарегистрироваться</button>
+            <?php
+              endif; 
+            ?>
             <div class="alert alert-danger mt-2" id="errorBlock"></div>
-            <button type="button" id="registerButton" class="btn btn-success mt-3" disabled>Зарегистрироваться</button>
           </form>
       </div>
 
@@ -41,36 +42,38 @@ require 'blocks/head.php';
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
 <script>
  var email = '';
- var code = '';
 
 $('#registerButton').click(function() {
   var pass = $('#pass').val();
-
+  var token = $('#token').val();
   $.ajax({
     url: 'ajax/reg.php',
     type: 'POST',
     cache: false,
     data: {
       action: 'register',
-      email: email,
+      token: token,
       pass: pass
     },
     dataType: 'html',
-    success: function(data) {
-      if (data == 'Готово') {
+    success: function(res1) {
+      const res = JSON.parse(res1);
+      if (res['success']) {
         $('#errorBlock').hide();
-        $('#registerButton').text('Вы зарегистрированы');
+        
         const btn = document.querySelector('#registerButton');
         btn.disabled = true;
+        $('#registerButton').text('Вы зарегистрированы');
         btn.classList.remove("btn-success");
         btn.setAttribute('title', 'Вы зарегистрированы');
         //btn.classList.add("btn-success");
       }
-      else {
+    },
+    error: function(res1) {
+        const res = JSON.parse(res1);
         $('#errorBlock').show();
-        $('#errorBlock').text(data);
+        $('#errorBlock').text(res['error']);
         $('#registerButton').text('Зарегистрироваться');
-      }
     }
   })
 })
@@ -89,9 +92,6 @@ $('#getCodeButton').click(function() {
     success: function(res1) {
       const res = JSON.parse(res1);
       if (res['success']) {
-        code = res['code'];
-        console.log(code);
-
         $('#errorBlock').hide();
         $('#getCodeButton').text('Код отправлен');
         var btn = document.querySelector('#getCodeButton');
@@ -99,35 +99,19 @@ $('#getCodeButton').click(function() {
         btn.classList.remove("btn-success");
         btn.setAttribute('title', 'getCodeButton');
         document.querySelector('#email').disabled = true;
-        
         document.querySelector('#checkCodeButton').disabled = false;
-        
         document.querySelector('#code').disabled = false;
         
       }
-      else {
+    },
+    error: function(res1) {
+        const res = JSON.parse(res1);
         email = '';
         $('#errorBlock').show();
         $('#errorBlock').text(res['error']);
         $('#getCodeButton').text('Подтвердить email');
       }
-    }
   })
-})
-
-$('#checkCodeButton').click(function() {
-  if (code == $('#code').val()) {
-
-    $('#errorBlock').hide();
-    document.querySelector('#registerButton').disabled = false;
-    document.querySelector('#pass').disabled = false;
-    document.querySelector('#checkCodeButton').disabled = true;
-    document.querySelector('#code').disabled = true;
-  }
-  else {
-    $('#errorBlock').show();
-    $('#errorBlock').text('Вы ввели неправильный код из письма :(');
-  }
 })
 
 </script>
