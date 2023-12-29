@@ -17,8 +17,8 @@ require 'blocks/head.php';
         ?>
           <h4>Авторизация</h4>
           <form>
-            <label for="login">Логин</label>
-            <input type="text" name="login" id="login" class="form-control">
+            <label for="email">Email</label>
+            <input type="text" name="email" id="email" class="form-control">
 
             <label for="pass">Ваш пароль</label>
             <input type="password" name="pass" id="pass" class="form-control">
@@ -42,10 +42,16 @@ require 'blocks/head.php';
           </h2>
           
           <?php 
-            if($user_data->is_valid != null): // Дать ссылку
+            if(!empty($user_data) and $user_data->is_valid == 1): // Дать ссылку
           ?>
           <div class="card-body">
             Ваша ссылка: <a href="https://www.yandex.ru">Yandex</a>
+          </div>
+          <?php 
+            elseif(!empty($user_data) and $user_data->is_valid == 2):
+          ?>
+          <div class="card-body">
+            <?= $user_data->comment ?? 'Ошибка. Часть данных введено некорректно' ?>
           </div>
           <?php 
             else:
@@ -188,14 +194,14 @@ $('#exit_btn').click(function() {
 <!-- скрипт для входа -->
 <script>
   $('#loginButton').click(function(e) {
-    var login = $('#login').val();
+    var email = $('#email').val();
     var pass = $('#pass').val();
 
   $.ajax({
     url: '/ajax/auth.php',
     type: 'POST',
     cache: false,
-    data: {'login': login, 'pass': pass},
+    data: {'email': email, 'pass': pass},
     dataType: 'html',
     success: function(data) {
       if (data == 'готово') {

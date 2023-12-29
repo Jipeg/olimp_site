@@ -1,20 +1,24 @@
 <?php
-    $username = trim(filter_var($_POST['username'], FILTER_SANITIZE_STRING));
     $email = trim(filter_var($_POST['email'], FILTER_SANITIZE_EMAIL));
-    $login = trim(filter_var($_POST['login'], FILTER_SANITIZE_STRING));
     $pass = trim(filter_var($_POST['pass'], FILTER_SANITIZE_STRING));
 
     $error = '';
-    if(strlen($username) <= 3){
-        $error = 'Введите имя';
-    } else if(strlen($email) <= 3){
+    if(strlen($email) <= 3){
         $error = 'Введите email';
-    } else if(strlen($login) <= 3){
-        $error = 'Введите логин';
     } else if(strlen($pass) <= 3){
-        $error = 'Введите пароль';
+        $error = 'Введите пароль длиннее 3 символов';
+    }
+    require_once '../db/db1.php';
+    $sql = 'SELECT `id`, `pass` FROM `users` WHERE `email` = :email';
+    $query = $pdo->prepare($sql);
+    $query->execute(['email' => $email]);
+
+    $user = $query->fetch(PDO::FETCH_OBJ);
+    if (!empty($user)){ 
+        $error = 'Пользователь с таким email уже зарегистрирован';
     }
 
+    // Проверка ВСЕХ ошибок!
     if (strlen($error) != 0) {
         echo $error;
         exit();
@@ -24,10 +28,10 @@
     $pass = md5($pass . $hash);
 
     // echo $pass;
-    require_once '../db/db1.php';
-    $sql = 'INSERT INTO users(name, email, login, pass) VALUES (?,?,?,?)';
+
+    $sql = 'INSERT INTO users(name, email, login, pass) VALUES ("имя",?,"логин",?)';
     $query = $pdo->prepare($sql);
-    $query->execute([$username, $email, $login, $pass]);
+    $query->execute([$email, $pass]);
 
     echo 'Готово';
 ?>
